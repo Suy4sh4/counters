@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donation Tracker - Modern Landing Page</title>
+  <title>Donation Tracker</title>
   <style>
     /* Global Styles */
     body {
@@ -14,13 +14,14 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: radial-gradient(circle, #1a1a1a, #000000);
+      background: radial-gradient(circle, #121212, #000000);
       color: #fff;
       overflow: hidden;
+      position: relative;
     }
 
-    /* Animated Background */
-    body::before {
+    /* Particle Background */
+    .particles {
       content: '';
       position: absolute;
       top: -50%;
@@ -33,9 +34,9 @@
       z-index: -1;
     }
 
-    @keyframes moveBackground {
-      0% { transform: translate(0, 0); }
-      100% { transform: translate(20px, 20px); }
+    @keyframes moveParticles {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10%); }
     }
 
     .landing-container {
@@ -46,11 +47,9 @@
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 20px;
-      font-weight: 600;
-      color: #fff;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     }
 
     .donation-container {
@@ -66,26 +65,23 @@
       background: rgba(255, 255, 255, 0.05);
       padding: 30px;
       border-radius: 20px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
       width: 250px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .donation-counter:hover {
       transform: translateY(-10px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
     }
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin-bottom: 15px;
-      color: #fff;
-      font-weight: 500;
     }
 
     .progress-circle {
+      position: relative;
       width: 150px;
       height: 150px;
       border-radius: 50%;
@@ -94,18 +90,7 @@
       justify-content: center;
       align-items: center;
       margin: 0 auto;
-      position: relative;
-      transition: transform 0.3s ease;
-    }
-
-    .progress-circle::after {
-      content: '';
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     .progress-circle span {
@@ -135,7 +120,7 @@
       transform: translateY(-5px);
     }
 
-    /* Responsive Design */
+    /* Responsive */
     @media (max-width: 768px) {
       h1 {
         font-size: 2rem;
@@ -151,44 +136,30 @@
         height: 120px;
       }
 
-      .progress-circle::after {
-        width: 90px;
-        height: 90px;
-      }
-
       .progress-circle span {
         font-size: 1.5rem;
-      }
-
-      .cta-button {
-        font-size: 1rem;
-        padding: 12px 24px;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Landing Page Content -->
+  <div class="particles"></div>
+
   <div class="landing-container">
     <h1>Donation Tracker</h1>
     <div class="donation-container">
-      <!-- Total Donation Collected -->
       <div class="donation-counter">
         <h2>Total Donation Collected</h2>
         <div class="progress-circle" id="collected-progress">
           <span id="collected-percent">0%</span>
         </div>
       </div>
-
-      <!-- Total Donation Used -->
       <div class="donation-counter">
         <h2>Total Donation Used</h2>
         <div class="progress-circle" id="used-progress">
           <span id="used-percent">0%</span>
         </div>
       </div>
-
-      <!-- Pending Donation -->
       <div class="donation-counter">
         <h2>Pending Donation</h2>
         <div class="progress-circle" id="pending-progress">
@@ -196,55 +167,35 @@
         </div>
       </div>
     </div>
-
-    <!-- Call-to-Action Button -->
     <button class="cta-button" onclick="viewStatistics()">View Detailed Statistics</button>
   </div>
 
   <script>
-    // JavaScript for animating the circular progress bars
     function animateProgressCircle(elementId, targetPercent, color) {
       const progressCircle = document.getElementById(elementId);
       const percentElement = progressCircle.querySelector('span');
-      const duration = 2000; // Animation duration in milliseconds
-      const start = 0;
-      let startTime = null;
-
-      function updateProgress(timestamp) {
-        if (!startTime) startTime = timestamp;
-        const progress = timestamp - startTime;
-        const percentage = Math.min(progress / duration, 1);
-
-        const currentPercent = start + (targetPercent - start) * percentage;
-
-        // Update the progress circle
-        progressCircle.style.background = `conic-gradient(${color} ${currentPercent}%, transparent ${currentPercent}% 100%)`;
-        percentElement.textContent = `${Math.floor(currentPercent)}%`;
-
-        if (percentage < 1) {
-          requestAnimationFrame(updateProgress);
+      let progress = 0;
+      const interval = setInterval(() => {
+        if (progress >= targetPercent) {
+          clearInterval(interval);
         } else {
-          percentElement.textContent = `${targetPercent}%`;
+          progress++;
+          progressCircle.style.background = `conic-gradient(${color} ${progress}%, transparent ${progress}% 100%)`;
+          percentElement.textContent = `${progress}%`;
         }
-      }
-
-      requestAnimationFrame(updateProgress);
+      }, 20);
     }
 
-    // Initialize the counters with test data
     function initializeCounters() {
-      animateProgressCircle('collected-progress', 46, '#2ecc71'); // 46% collected
-      animateProgressCircle('used-progress', 30, '#e74c3c'); // 30% used
-      animateProgressCircle('pending-progress', 24, '#3498db'); // 24% pending
+      animateProgressCircle('collected-progress', 76, '#2ecc71');
+      animateProgressCircle('used-progress', 53, '#e74c3c');
+      animateProgressCircle('pending-progress', 23, '#3498db');
     }
 
-    // Function for the CTA button (can be linked to another page or modal)
     function viewStatistics() {
       alert("Redirecting to detailed statistics...");
-      // window.location.href = "statistics.html"; // Uncomment to redirect
     }
 
-    // Run the counters when the page loads
     window.onload = initializeCounters;
   </script>
 </body>
