@@ -120,26 +120,23 @@
       transform: translateY(-5px);
     }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
+    /* Responsive Adjustments */
+@media (max-width: 768px) {
+  .donation-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-      .donation-counter {
-        width: 100%;
-        max-width: 300px;
-      }
+  .donation-counter {
+    width: 90%;
+    max-width: 280px;
+  }
 
-      .progress-circle {
-        width: 120px;
-        height: 120px;
-      }
-
-      .progress-circle span {
-        font-size: 1.5rem;
-      }
-    }
+  .progress-circle {
+    width: 100px;
+    height: 100px;
+  }
+}
   </style>
 </head>
 <body>
