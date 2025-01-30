@@ -14,36 +14,22 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      background: radial-gradient(circle, #121212, #000000);
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+      background-size: 400% 400%;
+      animation: bgAnimation 10s ease infinite;
       color: #fff;
-      overflow: hidden;
-      position: relative;
+      text-align: center;
     }
 
-    /* Particle Background */
-    .particles {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 10%, transparent 10.01%);
-      background-size: 20px 20px;
-      animation: moveBackground 10s linear infinite;
-      z-index: -1;
-    }
-
-    @keyframes moveParticles {
-      from { transform: translateY(0); }
-      to { transform: translateY(-10%); }
+    @keyframes bgAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .landing-container {
-      text-align: center;
-      max-width: 1200px;
+      max-width: 90%;
       padding: 20px;
-      z-index: 1;
     }
 
     h1 {
@@ -56,34 +42,27 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 30px;
-      margin-top: 40px;
+      gap: 20px;
     }
 
     .donation-counter {
       text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
       backdrop-filter: blur(10px);
-      width: 250px;
+      width: 220px;
       transition: transform 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .donation-counter:hover {
-      transform: translateY(-10px);
-    }
-
-    h2 {
-      font-size: 1.3rem;
-      margin-bottom: 15px;
+      transform: translateY(-5px);
     }
 
     .progress-circle {
       position: relative;
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       background: conic-gradient(#2ecc71 0%, transparent 0%);
       display: flex;
@@ -95,53 +74,48 @@
 
     .progress-circle span {
       position: absolute;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: bold;
       color: #fff;
-      z-index: 1;
     }
 
     .cta-button {
-      margin-top: 40px;
-      padding: 15px 30px;
+      margin-top: 30px;
+      padding: 12px 25px;
       font-size: 1.2rem;
-      font-weight: 600;
       color: #fff;
       background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      border: none;
       border-radius: 50px;
       cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
     }
 
     .cta-button:hover {
       background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-5px);
+      transform: translateY(-3px);
     }
 
     /* Responsive Adjustments */
-@media (max-width: 768px) {
-  .donation-container {
-    flex-direction: column;
-    align-items: center;
-  }
+    @media (max-width: 768px) {
+      .donation-container {
+        flex-direction: column;
+        align-items: center;
+      }
 
-  .donation-counter {
-    width: 90%;
-    max-width: 280px;
-  }
+      .donation-counter {
+        width: 90%;
+        max-width: 280px;
+      }
 
-  .progress-circle {
-    width: 100px;
-    height: 100px;
-  }
-}
+      .progress-circle {
+        width: 100px;
+        height: 100px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="particles"></div>
-
   <div class="landing-container">
     <h1>Donation Tracker</h1>
     <div class="donation-container">
@@ -180,7 +154,7 @@
           progressCircle.style.background = `conic-gradient(${color} ${progress}%, transparent ${progress}% 100%)`;
           percentElement.textContent = `${progress}%`;
         }
-      }, 20);
+      }, 15);
     }
 
     function initializeCounters() {
