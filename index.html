@@ -1,146 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glide To Reveal Secret Code</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            font-family: "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui;
-            background: hsl(0 0% 0%) !important;
-            gap: 2rem;
-        }
-        
-        body::before {
-            --line: hsl(0 0% 95% / 0.25);
-            content: "";
-            height: 100vh;
-            width: 100vw;
-            position: fixed;
-            background:
-                linear-gradient(90deg, var(--line) 1px, transparent 1px 10vmin) 0 -5vmin / 10vmin 10vmin,
-                linear-gradient(var(--line) 1px, transparent 1px 10vmin) 0 -5vmin / 10vmin 10vmin;
-            -webkit-mask: linear-gradient(-15deg, transparent 30%, white);
-                    mask: linear-gradient(-15deg, transparent 30%, white);
-            top: 0;
-            z-index: -1;
-        }
-        
-        section {
-            display: grid;
-            gap: 4rem;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        section p {
-            margin: 0;
-            font-size: 2.25rem;
-            color: hsl(0 0% 40%);
-            text-align: center;
-            background: linear-gradient(hsl(0 0% 80%), hsl(0 0% 50%));
-            color: transparent;
-            -webkit-background-clip: text;
-                    background-clip: text;
-        }
-        
-        .code {
-            font-size: 3rem;
-            display: flex;
-            flex-wrap: nowrap;
-            color: hsl(0 0% 100%);
-            border-radius: 1rem;
-            background: hsl(0 0% 6%);
-            justify-content: center;
-            box-shadow: 0 1px hsl(0 0% 100% / 0.25) inset;
-        }
-        
-        .code:hover {
-            cursor: grab;
-        }
-        
-        .digit {
-            display: flex;
-            height: 100%;
-            padding: 5.5rem 1rem;
-        }
-        
-        .digit:focus-visible {
-            outline-color: hsl(0 0% 50% / 0.25);
-            outline-offset: 1rem;
-        }
-        
-        .digit span {
-            scale: calc(var(--active, 0) + 0.5);
-            filter: blur(calc((1 - var(--active, 0)) * 1rem));
-            transition: scale calc(((1 - var(--active, 0)) + 0.2) * 1s), filter calc(((1 - var(--active, 0)) + 0.2) * 1s);
-        }
-        
-        ul {
-            padding: 0;
-            margin: 0;
-        }
-        
-        .digit:first-of-type {
-            padding-left: 5rem;
-        }
-        .digit:last-of-type {
-            padding-right: 5rem;
-        }
-        
-        :root {
-            --lerp-0: 1;
-            --lerp-1: calc(sin(50deg));
-            --lerp-2: calc(sin(45deg));
-            --lerp-3: calc(sin(35deg));
-            --lerp-4: calc(sin(25deg));
-            --lerp-5: calc(sin(15deg));
-        }
-        
-        .digit:is(:hover, :focus-visible) {
-            --active: var(--lerp-0);
-        }
-        .digit:is(:hover, :focus-visible) + .digit,
-        .digit:has(+ .digit:is(:hover, :focus-visible)) {
-            --active: var(--lerp-1);
-        }
-        .digit:is(:hover, :focus-visible) + .digit + .digit,
-        .digit:has(+ .digit + .digit:is(:hover, :focus-visible)) {
-            --active: var(--lerp-2);
-        }
-        .digit:is(:hover, :focus-visible) + .digit + .digit + .digit,
-        .digit:has(+ .digit + .digit + .digit:is(:hover, :focus-visible)) {
-            --active: var(--lerp-3);
-        }
-        .digit:is(:hover, :focus-visible) + .digit + .digit + .digit + .digit,
-        .digit:has(+ .digit + .digit + .digit + .digit:is(:hover, :focus-visible)) {
-            --active: var(--lerp-4);
-        }
-        .digit:is(:hover, :focus-visible) + .digit + .digit + .digit + .digit + .digit,
-        .digit:has(+ .digit + .digit + .digit + .digit + .digit:is(:hover, :focus-visible)) {
-            --active: var(--lerp-5);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donation Tracker - Modern Landing Page</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: radial-gradient(circle, #1a1a1a, #000000);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 10%, transparent 10.01%);
+      background-size: 20px 20px;
+      animation: moveBackground 10s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes moveBackground {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(20px, 20px); }
+    }
+
+    .landing-container {
+      text-align: center;
+      max-width: 1200px;
+      padding: 20px;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .donation-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .donation-counter {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      width: 250px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .donation-counter:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .progress-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: conic-gradient(#2ecc71 0%, transparent 0%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .progress-circle::after {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    .progress-circle span {
+      position: absolute;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #fff;
+      z-index: 1;
+    }
+
+    .cta-button {
+      margin-top: 40px;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-5px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .donation-counter {
+        width: 100%;
+        max-width: 300px;
+      }
+
+      .progress-circle {
+        width: 120px;
+        height: 120px;
+      }
+
+      .progress-circle::after {
+        width: 90px;
+        height: 90px;
+      }
+
+      .progress-circle span {
+        font-size: 1.5rem;
+      }
+
+      .cta-button {
+        font-size: 1rem;
+        padding: 12px 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <section>
-        <p>Total Number Of Donations</p>
-        <ul class="code">
-            <li tabindex="0" class="digit"><span>0</span></li>
-            <li tabindex="0" class="digit"><span>3</span></li>
-            <li tabindex="0" class="digit"><span>4</span></li>
-            <li tabindex="0" class="digit"><span>8</span></li>
-            <li tabindex="0" class="digit"><span>7</span></li>
-            <li tabindex="0" class="digit"><span>2</span></li>
-        </ul>
-    </section>
+  <!-- Landing Page Content -->
+  <div class="landing-container">
+    <h1>Donation Tracker</h1>
+    <div class="donation-container">
+      <!-- Total Donation Collected -->
+      <div class="donation-counter">
+        <h2>Total Donation Collected</h2>
+        <div class="progress-circle" id="collected-progress">
+          <span id="collected-percent">0%</span>
+        </div>
+      </div>
+
+      <!-- Total Donation Used -->
+      <div class="donation-counter">
+        <h2>Total Donation Used</h2>
+        <div class="progress-circle" id="used-progress">
+          <span id="used-percent">0%</span>
+        </div>
+      </div>
+
+      <!-- Pending Donation -->
+      <div class="donation-counter">
+        <h2>Pending Donation</h2>
+        <div class="progress-circle" id="pending-progress">
+          <span id="pending-percent">0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call-to-Action Button -->
+    <button class="cta-button" onclick="viewStatistics()">View Detailed Statistics</button>
+  </div>
+
+  <script>
+    // JavaScript for animating the circular progress bars
+    function animateProgressCircle(elementId, targetPercent, color) {
+      const progressCircle = document.getElementById(elementId);
+      const percentElement = progressCircle.querySelector('span');
+      const duration = 2000; // Animation duration in milliseconds
+      const start = 0;
+      let startTime = null;
+
+      function updateProgress(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = timestamp - startTime;
+        const percentage = Math.min(progress / duration, 1);
+
+        const currentPercent = start + (targetPercent - start) * percentage;
+
+        // Update the progress circle
+        progressCircle.style.background = `conic-gradient(${color} ${currentPercent}%, transparent ${currentPercent}% 100%)`;
+        percentElement.textContent = `${Math.floor(currentPercent)}%`;
+
+        if (percentage < 1) {
+          requestAnimationFrame(updateProgress);
+        } else {
+          percentElement.textContent = `${targetPercent}%`;
+        }
+      }
+
+      requestAnimationFrame(updateProgress);
+    }
+
+    // Initialize the counters with test data
+    function initializeCounters() {
+      animateProgressCircle('collected-progress', 46, '#2ecc71'); // 46% collected
+      animateProgressCircle('used-progress', 30, '#e74c3c'); // 30% used
+      animateProgressCircle('pending-progress', 24, '#3498db'); // 24% pending
+    }
+
+    // Function for the CTA button (can be linked to another page or modal)
+    function viewStatistics() {
+      alert("Redirecting to detailed statistics...");
+      // window.location.href = "statistics.html"; // Uncomment to redirect
+    }
+
+    // Run the counters when the page loads
+    window.onload = initializeCounters;
+  </script>
 </body>
 </html>
