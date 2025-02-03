@@ -1,207 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Donation Tracker</title>
-  <style>
-    /* Global Styles */
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: radial-gradient(circle, #121212, #000000);
-      color: #fff;
-      overflow: hidden;
-      text-align: center;
-      position: relative;
-    }
-
-    /* Particle Background */
-    .particles {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 10%, transparent 10.01%);
-      background-size: 20px 20px;
-      animation: moveBackground 10s linear infinite;
-      z-index: -1;
-    }
-
-    @keyframes moveParticles {
-      from { transform: translateY(0); }
-      to { transform: translateY(-10%); }
-    }
-
-    .landing-container {
-      text-align: center;
-      max-width: 90%;
-      padding: 20px;
-      z-index: 1;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    }
-
-    .donation-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin-top: 20px;
-    }
-
-    .donation-counter {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      width: 250px;
-      transition: transform 0.3s ease;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .donation-counter:hover {
-      transform: translateY(-5px);
-    }
-
-    h2 {
-      font-size: 1.3rem;
-      margin-bottom: 15px;
-    }
-
-    .progress-circle {
-      position: relative;
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      background: conic-gradient(#2ecc71 0%, transparent 0%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 auto;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    }
-
-    .progress-circle span {
-      position: absolute;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .cta-button {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 1.2rem;
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .cta-button:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-5px);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      .donation-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-
-      .donation-counter {
-        width: 90%;
-        max-width: 280px;
-      }
-
-      .progress-circle {
-        width: 100px;
-        height: 100px;
-      }
-
-      .progress-circle span {
-        font-size: 1.5rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="particles"></div>
-
-  <div class="landing-container">
-    <h1>Donation Tracker</h1>
-    <div class="donation-container">
-      <div class="donation-counter">
-        <h2>Total Donation Collected</h2>
-        <div class="progress-circle" id="collected-progress">
-          <span id="collected-percent">0%</span>
-        </div>
-      </div>
-      <div class="donation-counter">
-        <h2>Total Donation Used</h2>
-        <div class="progress-circle" id="used-progress">
-          <span id="used-percent">0%</span>
-        </div>
-      </div>
-      <div class="donation-counter">
-        <h2>Pending Donation</h2>
-        <div class="progress-circle" id="pending-progress">
-          <span id="pending-percent">0%</span>
-        </div>
-      </div>
-    </div>
-    <button class="cta-button" onclick="viewStatistics()">View Detailed Statistics</button>
-  </div>
-
-  <script>
-    function animateProgressCircle(elementId, targetPercent, color) {
-      const progressCircle = document.getElementById(elementId);
-      const percentElement = progressCircle.querySelector('span');
-      let progress = 0;
-      const interval = setInterval(() => {
-        if (progress >= targetPercent) {
-          clearInterval(interval);
-        } else {
-          progress++;
-          progressCircle.style.background = `conic-gradient(${color} ${progress}%, transparent ${progress}% 100%)`;
-          percentElement.textContent = `${progress}%`;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#6366f1" data-border-radius='small'></script>
+    <style>
+        /* Animation for fading in/out */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-      }, 20);
-    }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(10px); }
+        }
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        .fade-out { animation: fadeOut 0.3s ease-in-out; }
+        .typing-animation { overflow: hidden; white-space: nowrap; animation: typing 1s steps(40, end); }
 
-    function initializeCounters() {
-      animateProgressCircle('collected-progress', 76, '#2ecc71');
-      animateProgressCircle('used-progress', 53, '#e74c3c');
-      animateProgressCircle('pending-progress', 23, '#3498db');
-    }
+        /* Adjust chat box to be more mobile responsive */
+        .chat-message-box {
+            max-width: 100%;
+            word-wrap: break-word;
+            white-space: normal;
+            margin-bottom: 0.5rem;
+        }
+        
 
-    function viewStatistics() {
-      alert("Redirecting to detailed statistics...");
-    }
+        /* Style the input area */
+        .chat-input-container {
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
 
-    window.onload = initializeCounters;
-  </script>
+        .chat-input-container input {
+            width: 100%;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        /* Button to fix the size of language toggle */
+        .language-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: #f0f4f8;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .language-button:hover {
+            background-color: #e2e8f0;
+        }
+
+        /* Styles for the profile picture upload */
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .upload-container input[type="file"] {
+            display: none;
+        }
+
+        .upload-container label {
+            background-color: #6366f1;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            margin-left: 46%;
+        }
+        .upload-container label:hover {
+            background-color: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 to-purple-50 min-h-screen flex flex-col">
+    <div class="max-w-8xl mx-auto w-full flex-1 flex flex-col">
+        <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-b border-gray-100 z-50">
+            <div class="max-w-8xl mx-auto px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-10 h-10">
+                        <img id="profile-picture" src="https://static.wixstatic.com/media/2d87a8_1ef4d57c9e794be3b4fcec0d222046dc~mv2.png/v1/fill/w_96,h_96,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/2d87a8_1ef4d57c9e794be3b4fcec0d222046dc~mv2.png" alt="AI Assistant" class="rounded-full w-full h-full object-cover">
+                        <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></div>
+                    </div>
+                    <div>
+                        <h1 class="font-semibold text-gray-900">Shri Dwarkadhish Dharmseva Sanstha</h1>
+                        <p class="text-sm text-green-500">Online</p>
+                    </div>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <button class="language-button" title="Switch Language" onclick="toggleLanguage()">
+                        <i class="fas fa-language text-gray-700"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <main class="flex-1 overflow-y-auto pt-20 pb-32">
+            <div class="max-w-3xl mx-auto px-4 space-y-6" id="chat-container">
+                <!-- Chat messages will be dynamically inserted here -->
+            </div>
+
+            <!-- Profile Picture Upload Section -->
+            <div class="upload-container" id="upload-container" style="display: none;">
+                <label for="profile-upload">Upload Profile Picture</label>
+                <input type="file" id="profile-upload" accept="image/*" onchange="handleImageUpload(event)">
+            </div>
+        </main>
+        <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100">
+            <div class="max-w-8xl mx-auto px-4 py-4">
+                <div class="max-w-3xl mx-auto">
+                    <div class="flex gap-4 mb-4 overflow-x-auto py-2">
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap text-sm hover:bg-gray-200 !rounded-button" onclick="restartChat()">
+                            <i class="fas fa-rotate-left mr-2"></i>Restart
+                        </button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap text-sm hover:bg-gray-200 !rounded-button" onclick="clearChat()">
+                            <i class="fas fa-eraser mr-2"></i>Clear Chat
+                        </button>
+                        <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap text-sm hover:bg-gray-200 !rounded-button" onclick="saveChat()">
+                            <i class="fas fa-bookmark mr-2"></i>Save Chat
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <input id="chat-input" type="text" placeholder="Type your message..." class="w-full pl-12 pr-12 py-3 bg-gray-100 border-0 rounded-full focus:ring-2 focus:ring-custom focus:bg-white" onkeypress="handleKeyPress(event)">
+                        <button class="absolute left-3 top-1/2 -translate-y-1/2 p-2 text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-custom hover:text-custom/80" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let questions = [
+            "Hello! I'm your AI assistant. How can I help you today?",
+            "Can you upload a profile picture for me?",
+            "What is your favorite color?",
+            "How can I assist you further?"
+        ];
+        let currentQuestionIndex = 0;
+        let chatContainer = document.getElementById('chat-container');
+        let chatInput = document.getElementById('chat-input');
+        let profilePicture = document.getElementById('profile-picture');
+        let userProfilePicture = "https://ai-public.creatie.ai/gen_page/logo_placeholder.png"; // Default user profile picture
+        let language = 'en';  // Default language is English
+    
+        function displayNextQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                let question = questions[currentQuestionIndex];
+                if (language === 'mr') {
+                    question = translateToMarathi(question); // Placeholder translation function
+                }
+
+                let questionElement = document.createElement('div');
+                questionElement.className = 'flex gap-3 fade-in';
+                questionElement.innerHTML = ` 
+                    <div class="w-8 h-8">
+                        <img src="https://static.wixstatic.com/media/2d87a8_1ef4d57c9e794be3b4fcec0d222046dc~mv2.png/v1/fill/w_96,h_96,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/2d87a8_1ef4d57c9e794be3b4fcec0d222046dc~mv2.png" alt="AI" class="rounded-full w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-full sm:max-w-[85%]">
+                            <p class="text-gray-800 typing-animation" id="bot-message">${question}</p>
+                        </div>
+                        <div class="mt-2 ml-2 flex gap-2 items-center text-xs text-gray-500">
+                            <span>${new Date().toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                `;
+                chatContainer.appendChild(questionElement);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                if (question === questions[1]) {
+                    document.getElementById('upload-container').style.display = 'block'; // Show the upload option
+                }
+            }
+        }
+    
+        function sendMessage() {
+            let message = chatInput.value.trim();
+            if (message) {
+                let messageElement = document.createElement('div');
+                messageElement.className = 'flex gap-3 justify-end fade-in';
+                messageElement.innerHTML = `
+                    <div class="flex-1">
+                        <div class="bg-custom text-white rounded-2xl rounded-tr-sm p-4 shadow-sm max-w-[85%] ml-auto">
+                            <p>${message}</p>
+                        </div>
+                        <div class="mt-2 mr-2 flex gap-2 items-center justify-end text-xs text-gray-500">
+                            <span>${new Date().toLocaleTimeString()}</span>
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8">
+                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                            <img src="${userProfilePicture}" alt="User" class="rounded-full w-full h-full object-cover">
+                        </div>
+                    </div>
+                `;
+                chatContainer.appendChild(messageElement);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                chatInput.value = '';
+                currentQuestionIndex++;
+                setTimeout(() => {
+                    displayNextQuestion();
+                }, 500); // Simulate bot typing delay
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function restartChat() {
+            chatContainer.classList.add('fade-out');
+            setTimeout(() => {
+                chatContainer.innerHTML = '';
+                chatContainer.classList.remove('fade-out');
+                currentQuestionIndex = 0;
+                displayNextQuestion();
+            }, 300); // Fade-out effect duration
+        }
+    
+        function clearChat() {
+            chatContainer.classList.add('fade-out');
+            setTimeout(() => {
+                chatContainer.innerHTML = '';
+                chatContainer.classList.remove('fade-out');
+            }, 300); // Fade-out effect duration
+        }
+    
+        function saveChat() {
+            alert('Chat saved!');
+        }
+
+        function toggleLanguage() {
+            language = (language === 'en') ? 'mr' : 'en';  // Toggle between English and Marathi
+            restartChat(); // Restart chat with the new language
+        }
+
+        // Simulate typing animation for bot messages
+        function simulateTyping(element, text, speed = 100) {
+            let index = 0;
+            element.textContent = '';
+            let typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.textContent += text[index];
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, speed);
+        }
+
+        function translateToMarathi(text) {
+            const translations = {
+                "Hello! I'm your AI assistant. How can I help you today?": "नमस्कार! मी तुमचा AI सहाय्यक आहे. मी तुम्हाला कशाप्रकारे मदत करू शकतो?",
+                "Can you upload a profile picture for me?": "तुम्ही माझ्यासाठी प्रोफाइल चित्र अपलोड करू शकता का?",
+                "What is your favorite color?": "तुम्हाला कोणता रंग आवडतो?",
+                "How can I assist you further?": "मी तुम्हाला कशी आणखी मदत करू शकतो?"
+            };
+            return translations[text] || text;
+        }
+
+        // Initialize the chat with the first question
+        displayNextQuestion();
+    
+        // Handle image upload
+        function handleImageUpload(event) {
+            const file = eventtarget.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    userProfilePicture = e.target.result; // Set the uploaded image as the user's profile picture
+                    profilePicture.src = e.target.result; // Update the profile picture in the header
+                };
+                reader.readAsDataURL(file);
+                document.getElementById('upload-container').style.display = 'none'; // Hide the upload button after upload
+            } else {
+                alert('Please upload a valid image file.');
+            }
+        }
+    </script>
 </body>
 </html>
